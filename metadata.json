@@ -1,0 +1,6 @@
+{
+  "name": "Chronoflix",
+  "description": "An immersive, interactive chronological guide for major cinematic universes, complete with a smart AI-powered timeline assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
