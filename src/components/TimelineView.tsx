@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, Check, Play, Clock, Calendar, Zap, RefreshCw, AlertTriangle } from 'lucide-react';
 import { Universe, TimelineEntry } from '../types';
 import Footer from './Footer';
@@ -21,6 +21,10 @@ export default function TimelineView({
   onBack,
 }: TimelineViewProps) {
   const [selectedEra, setSelectedEra] = useState<string>('ALL');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [universe.id]);
 
   // Filter entries based on selected Era
   const filteredEntries = entries.filter((entry) => {
@@ -194,7 +198,7 @@ export default function TimelineView({
       </div>
 
       {/* Eras Filter Pills */}
-      <div className="px-6 py-4 bg-[#111318] sticky top-[72px] z-30 border-b border-white/5 flex gap-2 overflow-x-auto scrollbar-none no-scrollbar">
+      <div className="px-3.5 sm:px-6 py-2.5 sm:py-3 bg-[#111318] sticky top-[53px] md:top-[64px] z-30 border-b border-white/5 flex gap-2 overflow-x-auto scrollbar-none no-scrollbar items-center shadow-lg">
         {universe.eras.map((era) => {
           const isSelected = 
             (era === 'ALL' || era.startsWith('ALL ')) 
@@ -205,7 +209,7 @@ export default function TimelineView({
             <button
               key={era}
               onClick={() => setSelectedEra(era === 'ALL' || era.startsWith('ALL ') ? 'ALL' : era)}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-wider font-semibold uppercase select-none cursor-pointer transition-all ${
+              className={`shrink-0 whitespace-nowrap px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-mono tracking-wider font-semibold uppercase select-none cursor-pointer transition-all ${
                 isSelected 
                   ? `${theme.accentBg} text-[#111318] ${theme.accentGlow}`
                   : 'bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:bg-white/10'
@@ -219,9 +223,9 @@ export default function TimelineView({
       </div>
 
       {/* Vertical Timeline container */}
-      <div className="px-6 py-8 relative max-w-4xl mx-auto">
+      <div className="px-3.5 sm:px-6 py-6 sm:py-8 relative max-w-4xl mx-auto">
         {/* The Timeline Line */}
-        <div className={`absolute left-9 top-10 bottom-10 w-[2px] border-l-2 ${theme.lineColor} z-0`} />
+        <div className={`absolute left-6 sm:left-9 top-10 bottom-10 w-[2px] border-l-2 ${theme.lineColor} z-0`} />
 
         {/* Timeline Event list */}
         {filteredEntries.length === 0 ? (

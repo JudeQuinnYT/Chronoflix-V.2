@@ -6,6 +6,7 @@ import TimelineView from './components/TimelineView';
 import MovieDetailView from './components/MovieDetailView';
 import UniverseSearchView from './components/UniverseSearchView';
 import LibraryView from './components/LibraryView';
+import UniverseGridAdUnit from './components/UniverseGridAdUnit';
 import Footer from './components/Footer';
 import { UNIVERSES, TIMELINE_ENTRIES } from './data';
 import { UniverseId, TimelineEntry } from './types';
@@ -102,6 +103,11 @@ export default function App() {
     return UNIVERSES.find(u => u.id === univId)?.name || 'Unknown';
   };
 
+  // Reset window scroll position when switching views or selecting items
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [selectedUniverseId, selectedEntry, activeTab]);
+
   // Carousel states for the Universe timelines
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [isCarouselHovered, setIsCarouselHovered] = useState(false);
@@ -152,7 +158,7 @@ export default function App() {
 
       {/* Main viewport with dynamic switching content */}
       <main className="flex-1 flex flex-col">
-        {selectedEntry ? (
+          {selectedEntry ? (
           /* Movie Detail View overlay screen */
           <MovieDetailView 
             entry={selectedEntry}
@@ -210,7 +216,7 @@ export default function App() {
             <div 
               onMouseEnter={() => setIsCarouselHovered(true)}
               onMouseLeave={() => setIsCarouselHovered(false)}
-              className="relative min-h-[270px] sm:min-h-[300px] md:min-h-[340px] flex flex-col justify-end p-4 md:p-6 select-none overflow-hidden group bg-[#0a0c10]"
+              className="relative min-h-[330px] sm:min-h-[340px] md:min-h-[360px] flex flex-col justify-end p-4 md:p-6 select-none overflow-hidden group bg-[#0a0c10]"
             >
               {UNIVERSES.map((universe, idx) => {
                 const isActive = idx === carouselIndex;
@@ -220,7 +226,7 @@ export default function App() {
                 return (
                   <div
                     key={universe.id}
-                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex flex-col justify-end p-4 sm:p-6 md:p-8 ${
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out flex flex-col justify-end p-4 pb-14 sm:p-6 sm:pb-12 md:p-8 ${
                       isActive ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
                     }`}
                   >
@@ -340,7 +346,7 @@ export default function App() {
               </button>
 
               {/* Dot Indicators */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 bg-black/30 px-3 py-1.5 rounded-full border border-white/5 backdrop-blur-sm">
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 bg-black/50 px-3.5 py-1.5 rounded-full border border-white/10 backdrop-blur-md shadow-lg">
                 {UNIVERSES.map((_, idx) => (
                   <button
                     key={idx}
@@ -355,7 +361,7 @@ export default function App() {
             </div>
 
             {/* Cinematic Universes Grid list header */}
-            <div className="px-4 pt-6 pb-6 md:px-6 md:pt-8 md:pb-8 select-none max-w-6xl mx-auto w-full">
+            <div className="px-4 pt-6 pb-6 md:px-6 md:pt-8 md:pb-8 select-none max-w-[1400px] mx-auto w-full">
               <div className="flex items-center gap-2 mb-4">
                 <LayoutGrid className="w-5 h-5 text-[#ffba20]" />
                 <h3 
@@ -366,20 +372,25 @@ export default function App() {
                 </h3>
               </div>
 
-              {/* Universe Card Grids */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {UNIVERSES.map((universe) => (
-                  <UniverseCard 
-                    key={universe.id}
-                    universe={universe}
-                    watchedPercent={getWatchedPercent(universe.id)}
-                    entryCount={getEntryCount(universe.id)}
-                    onClick={() => {
-                      setSelectedUniverseId(universe.id);
-                      setActiveTab('timeline');
-                    }}
-                  />
-                ))}
+              {/* Universe Card Grids + Side Ad Banner on Desktop */}
+              <div className="flex flex-col lg:flex-row gap-5 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1 w-full">
+                  {UNIVERSES.map((universe) => (
+                    <UniverseCard 
+                      key={universe.id}
+                      universe={universe}
+                      watchedPercent={getWatchedPercent(universe.id)}
+                      entryCount={getEntryCount(universe.id)}
+                      onClick={() => {
+                        setSelectedUniverseId(universe.id);
+                        setActiveTab('timeline');
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Ad Banner on the right side of Universe Cards for Desktop Web */}
+                <UniverseGridAdUnit />
               </div>
             </div>
 

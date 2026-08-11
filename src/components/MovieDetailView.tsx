@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ArrowLeft, Check, Bookmark, Calendar, Clock, Film, ListOrdered } from 'lucide-react';
 import { TimelineEntry } from '../types';
 import Footer from './Footer';
@@ -25,6 +26,9 @@ export default function MovieDetailView({
   onBack,
   allEntries
 }: MovieDetailViewProps) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [entry.id]);
   const getUniverseGlow = () => {
     switch (entry.universeId) {
       case 'mcu':
