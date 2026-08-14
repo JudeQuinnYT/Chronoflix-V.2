@@ -57,7 +57,7 @@ export const BLOG_POSTS: BlogPost[] = [
     author: 'ChronoFlix Lore Master',
     date: 'August 2026',
     readTime: '7 min read',
-    featuredImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
+    featuredImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80',
     tags: ['Star Wars', 'Skywalker Saga', 'BBY ABY', 'Jedi', 'Sith'],
     excerpt: 'How do Star Wars historians date galactic events? Everything centers around BBY (Before Battle of Yavin) and ABY (After Battle of Yavin). Here is the complete breakdown from The Acolyte to The Rise of Skywalker.',
     introduction: 'In the Star Wars galaxy, time is officially measured relative to the climax of Episode IV: A New Hope—the Battle of Yavin (0 BBY), where Luke Skywalker destroyed the Empire’s Death Star.',

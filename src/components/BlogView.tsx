@@ -78,6 +78,9 @@ export default function BlogView({
             <img
               src={activeArticle.featuredImage}
               alt={activeArticle.title}
+              onError={(e) => {
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80';
+              }}
               className="w-full h-full object-cover object-center filter brightness-90"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#111318] via-[#111318]/70 to-black/40" />
@@ -408,6 +411,9 @@ export default function BlogView({
                   <img
                     src={BLOG_POSTS[0].featuredImage}
                     alt={BLOG_POSTS[0].title}
+                    onError={(e) => {
+                      e.currentTarget.src = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80';
+                    }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#181c26] via-transparent to-transparent" />
@@ -472,6 +478,9 @@ export default function BlogView({
                       <img
                         src={post.featuredImage}
                         alt={post.title}
+                        onError={(e) => {
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80';
+                        }}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#181c26] via-transparent to-transparent" />
