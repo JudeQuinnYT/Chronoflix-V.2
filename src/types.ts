@@ -1,4 +1,4 @@
-export type UniverseId = 'mcu' | 'starwars' | 'middleearth' | 'conjuring' | 'dccinematic' | 'xmen' | 'spiderman' | 'alienpredator' | 'fastfurious' | 'godzilla';
+export type UniverseId = 'mcu' | 'starwars' | 'middleearth' | 'conjuring' | 'dccinematic' | 'xmen' | 'spiderman' | 'alienpredator' | 'fastfurious' | 'godzilla' | 'planetoftheapes' | 'jurassic' | 'transformers' | 'johnwick' | 'madmax' | 'wizardingworld';
 
 export interface CastMember {
   name: string;
@@ -40,4 +40,32 @@ export interface TimelineEntry {
   cast: CastMember[];
   nextEntryId: string | null;
   trailerEmbedId: string; // YouTube embed ID
+}
+
+export interface TriviaItem {
+  question: string;
+  answer: string;
+  funFact: string;
+}
+
+export interface BlogPost {
+  id: string;
+  universeId: UniverseId;
+  title: string;
+  subtitle: string;
+  category: 'Timeline Guide' | 'Franchise Lore' | 'Behind The Scenes' | 'Watch Order' | 'Trivia Deep-Dive';
+  author: string;
+  date: string;
+  readTime: string;
+  featuredImage: string;
+  tags: string[];
+  excerpt: string;
+  introduction: string;
+  keyTakeaways: string[];
+  mainContent: {
+    heading: string;
+    body: string;
+  }[];
+  trivia: TriviaItem[];
+  timelineRecommendation: string;
 }

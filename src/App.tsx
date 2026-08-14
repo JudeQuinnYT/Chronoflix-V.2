@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { LayoutGrid, Waypoints, Search, Bookmark, ChevronLeft, ChevronRight, Play, Info } from 'lucide-react';
+import { LayoutGrid, Waypoints, BookOpen, Bookmark, ChevronLeft, ChevronRight, Play, Info } from 'lucide-react';
 import Header from './components/Header';
 import UniverseCard from './components/UniverseCard';
 import TimelineView from './components/TimelineView';
 import MovieDetailView from './components/MovieDetailView';
-import UniverseSearchView from './components/UniverseSearchView';
+import BlogView from './components/BlogView';
 import LibraryView from './components/LibraryView';
 import UniverseGridAdUnit from './components/UniverseGridAdUnit';
 import Footer from './components/Footer';
@@ -22,7 +22,7 @@ const DEFAULT_WATCHED: Record<string, boolean> = {
 };
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'universes' | 'timeline' | 'search' | 'library'>('universes');
+  const [activeTab, setActiveTab] = useState<'universes' | 'timeline' | 'blog' | 'library'>('universes');
   const [selectedUniverseId, setSelectedUniverseId] = useState<UniverseId | null>(null);
   const [selectedEntry, setSelectedEntry] = useState<TimelineEntry | null>(null);
   
@@ -140,11 +140,11 @@ export default function App() {
           backLabel="UNIVERSES"
           subtitle={`${UNIVERSES.find(u => u.id === selectedUniverseId)?.name || 'TIMELINE'} UNIVERSE`}
         />
-      ) : activeTab === 'search' ? (
+      ) : activeTab === 'blog' ? (
         <Header 
           onBack={() => setActiveTab('universes')}
           backLabel="HOME"
-          subtitle="SEARCH UNIVERSES"
+          subtitle="BLOG & LORE TRIVIA HUB"
         />
       ) : activeTab === 'library' ? (
         <Header 
@@ -184,12 +184,10 @@ export default function App() {
             onEntrySelect={(entry) => setSelectedEntry(entry)}
             onBack={() => setSelectedUniverseId(null)}
           />
-        ) : activeTab === 'search' ? (
-          /* Search & Universe Grid view */
-          <UniverseSearchView 
+        ) : activeTab === 'blog' ? (
+          /* Blog & Lore Hub View */
+          <BlogView 
             universes={UNIVERSES}
-            getWatchedPercent={getWatchedPercent}
-            getEntryCount={getEntryCount}
             onSelectUniverse={(univId) => {
               setSelectedUniverseId(univId);
               setActiveTab('timeline');
@@ -236,29 +234,62 @@ export default function App() {
                       <div className={`absolute inset-0 bg-gradient-to-tr ${
                         universe.id === 'mcu' ? 'from-cyan-950/80 via-purple-950/40 to-[#111318]' :
                         universe.id === 'fastfurious' ? 'from-amber-950/80 via-orange-950/40 to-[#111318]' :
-                        universe.id === 'starwars' ? 'from-amber-950/60 via-blue-950/50 to-[#111318]' :
-                        universe.id === 'middleearth' ? 'from-yellow-950/70 via-emerald-950/30 to-[#111318]' :
-                        universe.id === 'conjuring' ? 'from-stone-900 via-zinc-900 to-[#111318]' :
-                        'from-red-950/80 via-emerald-950/40 to-[#111318]'
+                        universe.id === 'starwars' ? 'from-yellow-950/70 via-blue-950/50 to-[#111318]' :
+                        universe.id === 'godzilla' ? 'from-red-950/80 via-emerald-950/40 to-[#111318]' :
+                        universe.id === 'middleearth' ? 'from-emerald-950/80 via-amber-950/40 to-[#111318]' :
+                        universe.id === 'conjuring' ? 'from-stone-900 via-rose-950/70 to-[#111318]' :
+                        universe.id === 'dccinematic' ? 'from-blue-950/80 via-indigo-950/40 to-[#111318]' :
+                        universe.id === 'xmen' ? 'from-sky-950/80 via-yellow-950/40 to-[#111318]' :
+                        universe.id === 'spiderman' ? 'from-rose-950/80 via-red-950/50 to-[#111318]' :
+                        universe.id === 'alienpredator' ? 'from-emerald-950/90 via-teal-950/50 to-[#111318]' :
+                        universe.id === 'planetoftheapes' ? 'from-emerald-950/80 via-amber-950/60 to-[#111318]' :
+                        universe.id === 'jurassic' ? 'from-amber-950/90 via-emerald-950/50 to-[#111318]' :
+                        universe.id === 'transformers' ? 'from-blue-950/90 via-red-950/60 to-[#111318]' :
+                        universe.id === 'johnwick' ? 'from-rose-950/90 via-slate-950/70 to-[#111318]' :
+                        universe.id === 'madmax' ? 'from-orange-950/90 via-amber-950/70 to-[#111318]' :
+                        universe.id === 'wizardingworld' ? 'from-amber-950/90 via-amber-900/60 to-[#111318]' :
+                        'from-indigo-950/70 via-purple-950/30 to-[#111318]'
                       }`} />
 
                       {/* Accent radial light source */}
                       <div className={`absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-3xl opacity-30 ${
                         universe.id === 'mcu' ? 'bg-cyan-500' :
                         universe.id === 'fastfurious' ? 'from-amber-500 to-orange-500 bg-gradient-to-r' :
-                        universe.id === 'starwars' ? 'bg-[#ffba20]' :
+                        universe.id === 'starwars' ? 'bg-yellow-500' :
+                        universe.id === 'godzilla' ? 'bg-red-500' :
                         universe.id === 'middleearth' ? 'bg-emerald-500' :
-                        universe.id === 'conjuring' ? 'bg-red-700' :
-                        'bg-red-500'
+                        universe.id === 'conjuring' ? 'bg-red-800' :
+                        universe.id === 'dccinematic' ? 'bg-blue-500' :
+                        universe.id === 'xmen' ? 'bg-sky-400' :
+                        universe.id === 'spiderman' ? 'bg-rose-500' :
+                        universe.id === 'alienpredator' ? 'bg-teal-400' :
+                        universe.id === 'planetoftheapes' ? 'bg-emerald-600' :
+                        universe.id === 'jurassic' ? 'bg-amber-500' :
+                        universe.id === 'transformers' ? 'bg-blue-600' :
+                        universe.id === 'johnwick' ? 'bg-rose-600' :
+                        universe.id === 'madmax' ? 'bg-orange-600' :
+                        universe.id === 'wizardingworld' ? 'bg-amber-600' :
+                        'bg-purple-500'
                       }`} />
 
                       <div className={`absolute -bottom-10 -left-10 w-96 h-96 rounded-full blur-3xl opacity-25 ${
                         universe.id === 'mcu' ? 'bg-purple-600' :
                         universe.id === 'fastfurious' ? 'bg-yellow-500' :
-                        universe.id === 'starwars' ? 'bg-amber-600' :
-                        universe.id === 'middleearth' ? 'bg-yellow-600' :
+                        universe.id === 'starwars' ? 'bg-blue-600' :
+                        universe.id === 'godzilla' ? 'bg-emerald-600' :
+                        universe.id === 'middleearth' ? 'bg-amber-600' :
                         universe.id === 'conjuring' ? 'bg-rose-900' :
-                        'bg-emerald-600'
+                        universe.id === 'dccinematic' ? 'bg-indigo-600' :
+                        universe.id === 'xmen' ? 'bg-yellow-500' :
+                        universe.id === 'spiderman' ? 'bg-red-600' :
+                        universe.id === 'alienpredator' ? 'bg-emerald-600' :
+                        universe.id === 'planetoftheapes' ? 'bg-amber-600' :
+                        universe.id === 'jurassic' ? 'bg-emerald-600' :
+                        universe.id === 'transformers' ? 'bg-red-600' :
+                        universe.id === 'johnwick' ? 'bg-amber-600' :
+                        universe.id === 'madmax' ? 'bg-amber-600' :
+                        universe.id === 'wizardingworld' ? 'bg-amber-500' :
+                        'bg-indigo-600'
                       }`} />
 
                       {/* Vignette & texture shading overlays */}
@@ -422,23 +453,23 @@ export default function App() {
           </span>
         </button>
 
-        {/* Search / AI assistant Tab button */}
+        {/* Blog & Trivia Hub Tab button */}
         <button
           onClick={() => {
-            setActiveTab('search');
+            setActiveTab('blog');
             setSelectedUniverseId(null);
             setSelectedEntry(null);
           }}
           className={`flex flex-col items-center justify-center gap-1 flex-1 py-1 transition-all cursor-pointer select-none focus:outline-none ${
-            activeTab === 'search' ? 'text-[#ffba20]' : 'text-gray-500 hover:text-gray-300'
+            activeTab === 'blog' ? 'text-[#ffba20]' : 'text-gray-500 hover:text-gray-300'
           }`}
         >
-          <Search className="w-5 h-5" />
+          <BookOpen className="w-5 h-5" />
           <span 
             className="text-[9px] font-semibold tracking-wider uppercase font-mono"
             style={{ fontFamily: 'JetBrains Mono, monospace' }}
           >
-            Search
+            Blog & Trivia
           </span>
         </button>
 

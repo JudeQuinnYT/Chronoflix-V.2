@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Search, X, LayoutGrid, ArrowLeft, Sparkles, Filter } from 'lucide-react';
-import { Universe } from '../types';
+import { Search, X, LayoutGrid, ArrowLeft, Filter } from 'lucide-react';
+import { Universe, TimelineEntry } from '../types';
+import { TIMELINE_ENTRIES } from '../data';
 import UniverseCard from './UniverseCard';
 import Footer from './Footer';
 
@@ -9,6 +10,7 @@ interface UniverseSearchViewProps {
   getWatchedPercent: (univId: any) => number;
   getEntryCount: (univId: any) => number;
   onSelectUniverse: (univId: any) => void;
+  onSelectEntry?: (entry: TimelineEntry) => void;
   onBack?: () => void;
 }
 
@@ -17,21 +19,52 @@ export default function UniverseSearchView({
   getWatchedPercent,
   getEntryCount,
   onSelectUniverse,
+  onSelectEntry,
   onBack,
 }: UniverseSearchViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter universes based on search query
+  const query = searchQuery.toLowerCase().trim();
+
+  // Pre-calculate matching movie entries for each universe based on query
+  const matchesByUniverse = universes.reduce((acc, u) => {
+    if (!query) {
+      acc[u.id] = [];
+      return acc;
+    }
+
+    const univEntries = TIMELINE_ENTRIES.filter((e) => e.universeId === u.id);
+    const matching = univEntries.filter((e) => {
+      const titleMatch = e.title.toLowerCase().includes(query);
+      const parentMatch = e.parentSeries?.toLowerCase().includes(query);
+      const eraMatch = e.era.toLowerCase().includes(query);
+      const castMatch = e.cast?.some(
+        (c) =>
+          c.name.toLowerCase().includes(query) ||
+          c.character.toLowerCase().includes(query)
+      );
+      const synopsisMatch = e.synopsis.toLowerCase().includes(query);
+      return titleMatch || parentMatch || eraMatch || castMatch || synopsisMatch;
+    });
+
+    acc[u.id] = matching;
+    return acc;
+  }, {} as Record<string, TimelineEntry[]>);
+
+  // Filter universes based on direct universe matches OR movie title matches
   const filteredUniverses = universes.filter((u) => {
-    if (!searchQuery.trim()) return true;
-    const query = searchQuery.toLowerCase().trim();
-    return (
+    if (!query) return true;
+
+    const directMatch =
       u.name.toLowerCase().includes(query) ||
       u.tagline.toLowerCase().includes(query) ||
       u.description.toLowerCase().includes(query) ||
       u.badge.toLowerCase().includes(query) ||
-      u.id.toLowerCase().includes(query)
-    );
+      u.id.toLowerCase().includes(query);
+
+    const hasMovieMatch = matchesByUniverse[u.id] && matchesByUniverse[u.id].length > 0;
+
+    return directMatch || hasMovieMatch;
   });
 
   return (
@@ -55,7 +88,7 @@ export default function UniverseSearchView({
           </div>
 
           <p className="text-xs md:text-sm text-gray-400 font-sans max-w-xl">
-            Search across all cinematic franchises. Type a universe title or keyword to filter and jump straight into its chronological timeline.
+            Search across all cinematic franchises. Type a movie title (e.g. <span className="text-amber-300 font-semibold">Tokyo Drift</span>, <span className="text-amber-300 font-semibold">Endgame</span>, <span className="text-amber-300 font-semibold">Goblet of Fire</span>), character, or franchise to find its universe timeline.
           </p>
 
           {/* Search Bar Input */}
@@ -67,7 +100,7 @@ export default function UniverseSearchView({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search universe name, genre, or keyword (e.g. Marvel, Fast, Star Wars)..."
+              placeholder="Search movie title, character, or universe (e.g. Tokyo Drift, Endgame, Star Wars, Harry Potter)..."
               className="w-full pl-10 pr-10 py-3 rounded-lg bg-[#111318] border border-white/15 text-white placeholder-gray-500 text-xs md:text-sm font-sans focus:outline-none focus:border-[#ffba20] focus:ring-1 focus:ring-[#ffba20] transition-all shadow-inner"
               autoFocus
             />
@@ -87,7 +120,7 @@ export default function UniverseSearchView({
             <span className="text-[10px] font-mono uppercase text-gray-500 flex items-center gap-1">
               <Filter className="w-3 h-3" /> Quick Filter:
             </span>
-            {['Marvel', 'DC', 'Star Wars', 'Fast', 'Middle-Earth', 'Conjuring', 'Monsterverse'].map((tag) => (
+            {['Tokyo Drift', 'Endgame', 'Star Wars', 'Fury Road', 'Harry Potter', 'John Wick', 'Spider-Verse'].map((tag) => (
               <button
                 key={tag}
                 onClick={() => setSearchQuery(tag)}
@@ -133,6 +166,8 @@ export default function UniverseSearchView({
                   watchedPercent={getWatchedPercent(universe.id)}
                   entryCount={getEntryCount(universe.id)}
                   onClick={() => onSelectUniverse(universe.id)}
+                  matchingEntries={matchesByUniverse[universe.id]}
+                  onSelectEntry={onSelectEntry}
                 />
               ))}
             </div>
@@ -148,7 +183,7 @@ export default function UniverseSearchView({
                 No Universes Found
               </h3>
               <p className="text-xs text-gray-400 max-w-md font-sans">
-                We couldn't find any cinematic universe matching "<span className="text-amber-300">{searchQuery}</span>". Try searching for another franchise title or keyword.
+                We couldn't find any cinematic universe or movie title matching "<span className="text-amber-300">{searchQuery}</span>". Try searching for another movie title, character, or franchise.
               </p>
             </div>
             <button

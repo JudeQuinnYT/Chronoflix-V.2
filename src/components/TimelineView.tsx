@@ -96,35 +96,62 @@ export default function TimelineView({
         <div className="absolute inset-0 z-0 overflow-hidden bg-[#111318]">
           <div className={`absolute inset-0 bg-gradient-to-tr ${
             universe.id === 'mcu' ? 'from-cyan-950/80 via-purple-950/40 to-[#111318]' :
-            universe.id === 'dccinematic' ? 'from-blue-950/80 via-indigo-950/40 to-[#111318]' :
             universe.id === 'fastfurious' ? 'from-amber-950/80 via-orange-950/40 to-[#111318]' :
-            universe.id === 'starwars' ? 'from-amber-950/60 via-blue-950/50 to-[#111318]' :
+            universe.id === 'starwars' ? 'from-yellow-950/70 via-blue-950/50 to-[#111318]' :
             universe.id === 'godzilla' ? 'from-red-950/80 via-emerald-950/40 to-[#111318]' :
-            universe.id === 'spiderman' ? 'from-rose-950/80 via-red-950/40 to-[#111318]' :
-            universe.id === 'alienpredator' ? 'from-emerald-950/80 via-teal-950/40 to-[#111318]' :
-            'from-amber-950/60 via-purple-950/40 to-[#111318]'
+            universe.id === 'middleearth' ? 'from-emerald-950/80 via-amber-950/40 to-[#111318]' :
+            universe.id === 'conjuring' ? 'from-stone-900 via-rose-950/70 to-[#111318]' :
+            universe.id === 'dccinematic' ? 'from-blue-950/80 via-indigo-950/40 to-[#111318]' :
+            universe.id === 'xmen' ? 'from-sky-950/80 via-yellow-950/40 to-[#111318]' :
+            universe.id === 'spiderman' ? 'from-rose-950/80 via-red-950/50 to-[#111318]' :
+            universe.id === 'alienpredator' ? 'from-emerald-950/90 via-teal-950/50 to-[#111318]' :
+            universe.id === 'planetoftheapes' ? 'from-emerald-950/80 via-amber-950/60 to-[#111318]' :
+            universe.id === 'jurassic' ? 'from-amber-950/90 via-emerald-950/50 to-[#111318]' :
+            universe.id === 'transformers' ? 'from-blue-950/90 via-red-950/60 to-[#111318]' :
+            universe.id === 'johnwick' ? 'from-rose-950/90 via-slate-950/70 to-[#111318]' :
+            universe.id === 'madmax' ? 'from-orange-950/90 via-amber-950/70 to-[#111318]' :
+            universe.id === 'wizardingworld' ? 'from-amber-950/90 via-amber-900/60 to-[#111318]' :
+            'from-indigo-950/70 via-purple-950/30 to-[#111318]'
           }`} />
 
           <div className={`absolute -top-1/2 -right-1/2 w-full h-full rounded-full blur-3xl opacity-35 ${
             universe.id === 'mcu' ? 'bg-cyan-500' :
-            universe.id === 'dccinematic' ? 'bg-blue-500' :
             universe.id === 'fastfurious' ? 'from-amber-500 to-orange-500 bg-gradient-to-r' :
-            universe.id === 'starwars' ? 'bg-[#ffba20]' :
+            universe.id === 'starwars' ? 'bg-yellow-500' :
             universe.id === 'godzilla' ? 'bg-red-500' :
+            universe.id === 'middleearth' ? 'bg-emerald-500' :
+            universe.id === 'conjuring' ? 'bg-red-800' :
+            universe.id === 'dccinematic' ? 'bg-blue-500' :
+            universe.id === 'xmen' ? 'bg-sky-400' :
             universe.id === 'spiderman' ? 'bg-rose-500' :
-            universe.id === 'alienpredator' ? 'bg-emerald-500' :
-            'bg-amber-500'
+            universe.id === 'alienpredator' ? 'bg-teal-400' :
+            universe.id === 'planetoftheapes' ? 'bg-emerald-600' :
+            universe.id === 'jurassic' ? 'bg-amber-500' :
+            universe.id === 'transformers' ? 'bg-blue-600' :
+            universe.id === 'johnwick' ? 'bg-rose-600' :
+            universe.id === 'madmax' ? 'bg-orange-600' :
+            universe.id === 'wizardingworld' ? 'bg-amber-600' :
+            'bg-purple-500'
           }`} />
 
           <div className={`absolute -bottom-10 -left-10 w-96 h-96 rounded-full blur-3xl opacity-25 ${
             universe.id === 'mcu' ? 'bg-purple-600' :
-            universe.id === 'dccinematic' ? 'bg-indigo-600' :
             universe.id === 'fastfurious' ? 'bg-yellow-500' :
-            universe.id === 'starwars' ? 'bg-amber-600' :
+            universe.id === 'starwars' ? 'bg-blue-600' :
             universe.id === 'godzilla' ? 'bg-emerald-600' :
+            universe.id === 'middleearth' ? 'bg-amber-600' :
+            universe.id === 'conjuring' ? 'bg-rose-900' :
+            universe.id === 'dccinematic' ? 'bg-indigo-600' :
+            universe.id === 'xmen' ? 'bg-yellow-500' :
             universe.id === 'spiderman' ? 'bg-red-600' :
-            universe.id === 'alienpredator' ? 'bg-teal-600' :
-            'bg-purple-600'
+            universe.id === 'alienpredator' ? 'bg-emerald-600' :
+            universe.id === 'planetoftheapes' ? 'bg-amber-600' :
+            universe.id === 'jurassic' ? 'bg-emerald-600' :
+            universe.id === 'transformers' ? 'bg-red-600' :
+            universe.id === 'johnwick' ? 'bg-amber-600' :
+            universe.id === 'madmax' ? 'bg-amber-600' :
+            universe.id === 'wizardingworld' ? 'bg-amber-500' :
+            'bg-indigo-600'
           }`} />
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#111318] via-transparent to-black/40" />
