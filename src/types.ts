@@ -1,4 +1,4 @@
-export type UniverseId = 'mcu' | 'starwars' | 'middleearth' | 'conjuring' | 'dccinematic' | 'xmen' | 'spiderman' | 'alienpredator' | 'fastfurious' | 'godzilla' | 'planetoftheapes' | 'jurassic' | 'transformers' | 'johnwick' | 'madmax' | 'wizardingworld';
+export type UniverseId = 'mcu' | 'starwars' | 'middleearth' | 'conjuring' | 'dccinematic' | 'despicableme' | 'xmen' | 'spiderman' | 'alienpredator' | 'fastfurious' | 'godzilla' | 'planetoftheapes' | 'rockycreed' | 'jurassic' | 'transformers' | 'johnwick' | 'madmax' | 'wizardingworld' | 'saw' | 'halloween' | 'eastrail177' | 'universalmonsters' | 'piratesofthecaribbean' | 'jasonbourne' | 'jamesbond' | 'mummy' | 'friday13th' | 'legomovie' | 'finaldestination';
 
 export interface CastMember {
   name: string;
